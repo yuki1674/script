@@ -353,7 +353,7 @@ end
 
 -- Scripts Tab Items
 AddItem(ScriptsTab, "LKZ", "https://api.luarmor.net/files/v4/loaders/65bf3459d87ba3ac46350e154b640929.lua")
-AddItem(ScriptsTab, "GLINT", "https://flowauth.net/v1/loaders/6824c37a4078d7d311677732e231edaa.lua")
+AddItem(ScriptsTab, "STORM", "https://flowauth.net/v1/loaders/6824c37a4078d7d311677732e231edaa.lua")
 AddItem(ScriptsTab, "LEVON", "https://pastefy.app/nasHhfko/raw")
 AddItem(ScriptsTab, "SENA", "https://raw.githubusercontent.com/senarblx/sena/refs/heads/main/senav3go")
 AddItem(ScriptsTab, "FOX", "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua")
@@ -395,7 +395,7 @@ AddItem(KeyTab, "NOVA", "https://raw.githubusercontent.com/NovaHubRBLX/Novahub/r
 AddItem(KeyTab, "SAIOPS", "https://api.saiops.cc/scripts/Steal-An-Egg-Script.lua", "KEY")
 AddItem(KeyTab, "SCRIPTVERSE", "https://scriptversekey.xyz/s/steal-an-egg", "KEY")
 AddItem(KeyTab, "AIRFLOW", "https://airflowscript.com/loader", "KEY")
-AddItem(KeyTab, "CLOVER", "https://raw.githubusercontent.com/Ryuun0x/Clover/refs/heads/main/main.lua", "KEY")
+AddItem(KeyTab, "CLOVER", "https://cloverhub.app/clover.lua, "KEY")
 AddItem(KeyTab, "FY", "https://FyyCommunity.my.id", "KEY")
 AddItem(KeyTab, "BF", "https://raw.githubusercontent.com/hanniii1/Loader/refs/heads/main/BFLoader.lua", "KEY")
 AddItem(KeyTab, "ZN", "https://zeroinhub.com/api/script", "KEY")
