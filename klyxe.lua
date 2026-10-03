@@ -410,7 +410,7 @@ AddItem(ShaderTab, "PSHADE ULTIMATE", "https://raw.githubusercontent.com/randoms
 
 -- Animations Tab Items (Kumpleto na ang tatlo)
 AddItem(AnimTab, "ANIMATION 1", "https://pastebin.com/raw/cr20JxP9", "ANIM")
-AddItem(AnimTab, "ANIMATION 2", "https://pastebin.com/raw/U1yYFq22", "ANIM")
+AddItem(AnimTab, "ANIMATION 2", "https://raw.githubusercontent.com/swaggayoung581-sudo/special-computing-machine/refs/heads/main/SAE_HUB_MENU_SKY_ACCESSORY_ANIM_FIXED_FOV_ANIM_COMPACT_SAVE_CONFIG.lua%20(1).txt", "ANIM")
 
 -- Music Tab Items (YouTube Music Player V8.5)
 AddItem(MusicTab, "YT MUSIC V8.5", "https://raw.githubusercontent.com/iimate/ytmusic/refs/heads/main/loader.lua", "MUSIC")
