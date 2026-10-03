@@ -395,7 +395,7 @@ AddItem(KeyTab, "NOVA", "https://raw.githubusercontent.com/NovaHubRBLX/Novahub/r
 AddItem(KeyTab, "SAIOPS", "https://api.saiops.cc/scripts/Steal-An-Egg-Script.lua", "KEY")
 AddItem(KeyTab, "SCRIPTVERSE", "https://scriptversekey.xyz/s/steal-an-egg", "KEY")
 AddItem(KeyTab, "AIRFLOW", "https://airflowscript.com/loader", "KEY")
-AddItem(KeyTab, "CLOVER", "https://cloverhub.app/clover.lua, "KEY")
+AddItem(KeyTab, "CLOVER", "https://cloverhub.app/clover.lua", "KEY")
 AddItem(KeyTab, "FY", "https://FyyCommunity.my.id", "KEY")
 AddItem(KeyTab, "BF", "https://raw.githubusercontent.com/hanniii1/Loader/refs/heads/main/BFLoader.lua", "KEY")
 AddItem(KeyTab, "ZN", "https://zeroinhub.com/api/script", "KEY")
