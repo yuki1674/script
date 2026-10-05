@@ -1,4 +1,4 @@
--- KLYXE HUB | Owner: clyecon (Loading Screen, Minimize, All Tabs & Swipeable Lists)
+-- KLYXE HUB | Owner: clyecon (Loading Screen, Minimize, Karinderya Tab & Swipeable Lists)
 local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -252,10 +252,12 @@ local function CreateTab(tabName)
     return ScrollFrame
 end
 
--- Tabs
+-- Tabs (Kasama na ang Karinderya tab)
 local ScriptsTab = CreateTab("Scripts")
 local RideAPetTab = CreateTab("Ride a Pet")
 local BreakStealTab = CreateTab("Break & Steal")
+local AnimeDiceTab = CreateTab("Anime Dice")
+local KarinderyaTab = CreateTab("Karinderya")
 local KeyTab = CreateTab("Key")
 local FinderTab = CreateTab("PS Finder")
 local ShaderTab = CreateTab("Shader")
@@ -359,7 +361,7 @@ local function AddItem(targetTab, scriptName, scriptUrl, badgeText)
     end)
 end
 
--- Scripts Tab Items (Storm Hub is included here)
+-- Scripts Tab Items
 AddItem(ScriptsTab, "LKZ", "https://api.luarmor.net/files/v4/loaders/65bf3459d87ba3ac46350e154b640929.lua")
 AddItem(ScriptsTab, "STORM", "https://flowauth.net/v1/loaders/6824c37a4078d7d311677732e231edaa.lua")
 AddItem(ScriptsTab, "LEVON", "https://pastefy.app/nasHhfko/raw")
@@ -391,13 +393,22 @@ AddItem(ScriptsTab, "SOLVEX", "https://raw.githubusercontent.com/Solvexxxx/Scrip
 AddItem(ScriptsTab, "PULSEHUB", "https://raw.githubusercontent.com/PulseZax/Loader/refs/heads/main/.lua")
 
 -- Ride a Pet Tab Items
-AddItem(RideAPetTab, "CHILI", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua", "KEYLESS")
+AddItem(RideAPetTab, "CHILI", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua", "PET")
 AddItem(RideAPetTab, "OUROBOROS", "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua", "KEYLESS")
 
 -- Break & Steal Tab Items
-AddItem(BreakStealTab, "STORM", "https://flowauth.net/v1/loaders/6824c37a4078d7d311677732e231edaa.lua", "KEYLESS")
-AddItem(BreakStealTab, "PRIVATE HUB", "https://api.jnkie.com/api/v1/luascripts/public/ba8f09cf06d30d431b514907755c5ca97a771538d4c441642b311911f0ae86f7/download", "KEYLESS")
+AddItem(BreakStealTab, "FOX", "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua", "BREAK/STEAL")
+AddItem(BreakStealTab, "NIGHT HUB", "https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/StealEggOnly.luau", "BREAK/STEAL")
+AddItem(BreakStealTab, "TSUO", "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg", "BREAK/STEAL")
 
+-- Anime Dice Tab Items
+AddItem(AnimeDiceTab, "VALUE HATS", "https://raw.githubusercontent.com/ValueHat-Script/Valuehat-script/refs/heads/main/AnimeDice.lua", "HATS")
+AddItem(AnimeDiceTab, "DAIK1 KEYLESS", "https://raw.githubusercontent.com/DAIK1HUB/ANIME-DICE./refs/heads/main/KEYLESS", "KEYLESS")
+
+-- Karinderya Tab Items (Nyxen Hub, Xanxn, Ouroboros)
+AddItem(KarinderyaTab, "NYXEN HUB", "https://raw.githubusercontent.com/jsnyxen/nyxen-hub/main/loader.lua", "NYXEN")
+AddItem(KarinderyaTab, "XANXN", "https://raw.githubusercontent.com/Zanxanax/scripts/main/Loader.lua", "XANXN")
+AddItem(KarinderyaTab, "OUROBOROS", "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua", "OURO")
 
 -- Key Tab Items
 AddItem(KeyTab, "OMG HUB", "https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua", "KEY")
@@ -428,15 +439,10 @@ AddItem(ShaderTab, "PSHADE ULTIMATE", "https://raw.githubusercontent.com/randoms
 
 -- Animations Tab Items
 AddItem(AnimTab, "ANIMATION 1", "https://pastebin.com/raw/cr20JxP9", "ANIM")
-AddItem(AnimTab, "QUICK ANIMATION", "https://raw.githubusercontent.com/swaggayoung581-sudo/special-computing-machine/refs/heads/main/SAE_HUB_MENU_SKY_ACCESSORY_ANIM_FIXED_FOV_ANIM_COMPACT_SAVE_CONFIG.lua%20(1).txt", "ANIM")
+AddItem(AnimTab, "ANIMATION 2", "https://raw.githubusercontent.com/swaggayoung581-sudo/special-computing-machine/refs/heads/main/SAE_HUB_MENU_SKY_ACCESSORY_ANIM_FIXED_FOV_ANIM_COMPACT_SAVE_CONFIG.lua%20(1).txt", "ANIM")
 
 -- Music Tab Items (YouTube Music Player V8.5)
 AddItem(MusicTab, "YT MUSIC V8.5", "https://raw.githubusercontent.com/iimate/ytmusic/refs/heads/main/loader.lua", "MUSIC")
-
--- ANIME DICE Tab Items
-AddItem(AnimTab, "FOR AFK", "https://raw.githubusercontent.com/ValueHat-Script/Valuehat-script/refs/heads/main/AnimeDice.lua", "KEYLESS")
-AddItem(AnimTab, "V2", "https://raw.githubusercontent.com/DAIK1HUB/ANIME-DICE./refs/heads/main/KEYLESS", "KEYLESS")
-
 
 -- Settings Tab Items
 local function AddSettingsItem(targetTab, labelText, buttonText, callback)
