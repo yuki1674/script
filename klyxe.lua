@@ -428,10 +428,15 @@ AddItem(ShaderTab, "PSHADE ULTIMATE", "https://raw.githubusercontent.com/randoms
 
 -- Animations Tab Items
 AddItem(AnimTab, "ANIMATION 1", "https://pastebin.com/raw/cr20JxP9", "ANIM")
-AddItem(AnimTab, "ANIMATION 2", "https://raw.githubusercontent.com/swaggayoung581-sudo/special-computing-machine/refs/heads/main/SAE_HUB_MENU_SKY_ACCESSORY_ANIM_FIXED_FOV_ANIM_COMPACT_SAVE_CONFIG.lua%20(1).txt", "ANIM")
+AddItem(AnimTab, "QUICK ANIMATION", "https://raw.githubusercontent.com/swaggayoung581-sudo/special-computing-machine/refs/heads/main/SAE_HUB_MENU_SKY_ACCESSORY_ANIM_FIXED_FOV_ANIM_COMPACT_SAVE_CONFIG.lua%20(1).txt", "ANIM")
 
 -- Music Tab Items (YouTube Music Player V8.5)
 AddItem(MusicTab, "YT MUSIC V8.5", "https://raw.githubusercontent.com/iimate/ytmusic/refs/heads/main/loader.lua", "MUSIC")
+
+-- ANIME DICE Tab Items
+AddItem(AnimTab, "FOR AFK", "https://raw.githubusercontent.com/ValueHat-Script/Valuehat-script/refs/heads/main/AnimeDice.lua", "KEYLESS")
+AddItem(AnimTab, "V2", "https://raw.githubusercontent.com/DAIK1HUB/ANIME-DICE./refs/heads/main/KEYLESS", "KEYLESS")
+
 
 -- Settings Tab Items
 local function AddSettingsItem(targetTab, labelText, buttonText, callback)
