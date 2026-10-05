@@ -391,13 +391,11 @@ AddItem(ScriptsTab, "SOLVEX", "https://raw.githubusercontent.com/Solvexxxx/Scrip
 AddItem(ScriptsTab, "PULSEHUB", "https://raw.githubusercontent.com/PulseZax/Loader/refs/heads/main/.lua")
 
 -- Ride a Pet Tab Items
-AddItem(RideAPetTab, "CHILI", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua", "PET")
+AddItem(RideAPetTab, "CHILI", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua", "KEYLESS")
 AddItem(RideAPetTab, "OUROBOROS", "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua", "KEYLESS")
 
 -- Break & Steal Tab Items
-AddItem(BreakStealTab, "FOX", "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua", "BREAK/STEAL")
-AddItem(BreakStealTab, "NIGHT HUB", "https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/StealEggOnly.luau", "BREAK/STEAL")
-AddItem(BreakStealTab, "TSUO", "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg", "BREAK/STEAL")
+AddItem(BreakStealTab, "STORM", "https://flowauth.net/v1/loaders/6824c37a4078d7d311677732e231edaa.lua", "KEYLESS")
 
 -- Key Tab Items
 AddItem(KeyTab, "OMG HUB", "https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua", "KEY")
