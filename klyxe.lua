@@ -1,10 +1,10 @@
--- KLYXE HUB | Owner: clyecon (Loading Screen, Minimize to Small Box, Animations Tab & All Scripts)
+-- KLYXE HUB | Owner: clyecon (Loading Screen, Minimize, All Tabs & Swipeable Lists)
 local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
--- 1. Loading Screen (Lalabas muna ng mga 5 segundo)[cite: 3]
+-- 1. Loading Screen (Lalabas muna ng mga 5 segundo)
 local LoadGui = Instance.new("ScreenGui")
 LoadGui.Parent = CoreGui or PlayerGui
 LoadGui.Name = "KlyxeLoading"
@@ -102,8 +102,8 @@ SmallStroke.Parent = SmallBox
 SmallStroke.Color = Color3.fromRGB(220, 20, 60)
 SmallStroke.Thickness = 2
 
--- Sidebar Frame (Kaliwa)
-local Sidebar = Instance.new("Frame")
+-- Sidebar Frame (Kaliwa) - Naka-ScrollingFrame na para ma-swipe kung madami ang tabs
+local SidebarScroll = Instance.new("ScrollingFrame")
 local SidebarLayout = Instance.new("UIListLayout")
 
 -- Content Container Frame (Kanan)
@@ -176,19 +176,25 @@ MinCorner.CornerRadius = UDim.new(1, 0)
 MinCorner.Parent = MinimizeBtn
 
 -- Sidebar Setup (Tabs sa Kaliwa)
-Sidebar.Parent = MainFrame
-Sidebar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-Sidebar.Position = UDim2.new(0, 10, 0, 38)
-Sidebar.Size = UDim2.new(0, 110, 1, -75)
-Sidebar.BackgroundTransparency = 0.5
+SidebarScroll.Parent = MainFrame
+SidebarScroll.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+SidebarScroll.Position = UDim2.new(0, 10, 0, 38)
+SidebarScroll.Size = UDim2.new(0, 110, 1, -75)
+SidebarScroll.BackgroundTransparency = 0.5
+SidebarScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+SidebarScroll.ScrollBarThickness = 3
 
 local SidebarCorner = Instance.new("UICorner")
 SidebarCorner.CornerRadius = UDim.new(0, 6)
-SidebarCorner.Parent = Sidebar
+SidebarCorner.Parent = SidebarScroll
 
-SidebarLayout.Parent = Sidebar
+SidebarLayout.Parent = SidebarScroll
 SidebarLayout.SortOrder = Enum.SortOrder.LayoutOrder
 SidebarLayout.Padding = UDim.new(0, 5)
+
+SidebarLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    SidebarScroll.CanvasSize = UDim2.new(0, 0, 0, SidebarLayout.AbsoluteContentSize.Y + 10)
+end)
 
 -- Content Container (Kanan)
 ContentContainer.Parent = MainFrame
@@ -202,7 +208,7 @@ local function CreateTab(tabName)
     local TabBtn = Instance.new("TextButton")
     local TabCorner = Instance.new("UICorner")
     
-    TabBtn.Parent = Sidebar
+    TabBtn.Parent = SidebarScroll
     TabBtn.Size = UDim2.new(1, 0, 0, 30)
     TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
     TabBtn.Font = Enum.Font.SourceSansBold
@@ -248,6 +254,8 @@ end
 
 -- Tabs
 local ScriptsTab = CreateTab("Scripts")
+local RideAPetTab = CreateTab("Ride a Pet")
+local BreakStealTab = CreateTab("Break & Steal")
 local KeyTab = CreateTab("Key")
 local FinderTab = CreateTab("PS Finder")
 local ShaderTab = CreateTab("Shader")
@@ -351,7 +359,7 @@ local function AddItem(targetTab, scriptName, scriptUrl, badgeText)
     end)
 end
 
--- Scripts Tab Items
+-- Scripts Tab Items (Storm Hub is included here)
 AddItem(ScriptsTab, "LKZ", "https://api.luarmor.net/files/v4/loaders/65bf3459d87ba3ac46350e154b640929.lua")
 AddItem(ScriptsTab, "STORM", "https://flowauth.net/v1/loaders/6824c37a4078d7d311677732e231edaa.lua")
 AddItem(ScriptsTab, "LEVON", "https://pastefy.app/nasHhfko/raw")
@@ -382,6 +390,15 @@ AddItem(ScriptsTab, "VOID SHELL", "https://raw.githubusercontent.com/VoidShell-n
 AddItem(ScriptsTab, "SOLVEX", "https://raw.githubusercontent.com/Solvexxxx/Scripts/refs/heads/main/SolvexGUI_SAE.lua")
 AddItem(ScriptsTab, "PULSEHUB", "https://raw.githubusercontent.com/PulseZax/Loader/refs/heads/main/.lua")
 
+-- Ride a Pet Tab Items
+AddItem(RideAPetTab, "CHILI", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua", "PET")
+AddItem(RideAPetTab, "OUROBOROS", "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua", "KEYLESS")
+
+-- Break & Steal Tab Items
+AddItem(BreakStealTab, "FOX", "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua", "BREAK/STEAL")
+AddItem(BreakStealTab, "NIGHT HUB", "https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/StealEggOnly.luau", "BREAK/STEAL")
+AddItem(BreakStealTab, "TSUO", "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg", "BREAK/STEAL")
+
 -- Key Tab Items
 AddItem(KeyTab, "OMG HUB", "https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua", "KEY")
 AddItem(KeyTab, "AJJANS", "https://api.luarmor.net/files/v4/loaders/36107afd3107e8d841f9d1a69e2465d4.lua", "KEY")
@@ -409,7 +426,7 @@ AddItem(FinderTab, "FINDER 2", "https://raw.githubusercontent.com/robloxscripts2
 -- Shader Tab Items
 AddItem(ShaderTab, "PSHADE ULTIMATE", "https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua", "GRAPHICS")
 
--- Animations Tab Items (Kumpleto na ang tatlo)
+-- Animations Tab Items
 AddItem(AnimTab, "ANIMATION 1", "https://pastebin.com/raw/cr20JxP9", "ANIM")
 AddItem(AnimTab, "ANIMATION 2", "https://raw.githubusercontent.com/swaggayoung581-sudo/special-computing-machine/refs/heads/main/SAE_HUB_MENU_SKY_ACCESSORY_ANIM_FIXED_FOV_ANIM_COMPACT_SAVE_CONFIG.lua%20(1).txt", "ANIM")
 
