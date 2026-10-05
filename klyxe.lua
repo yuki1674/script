@@ -396,6 +396,8 @@ AddItem(RideAPetTab, "OUROBOROS", "https://raw.githubusercontent.com/joustingmat
 
 -- Break & Steal Tab Items
 AddItem(BreakStealTab, "STORM", "https://flowauth.net/v1/loaders/6824c37a4078d7d311677732e231edaa.lua", "KEYLESS")
+AddItem(BreakStealTab, "PRIVATE HUB", "https://api.jnkie.com/api/v1/luascripts/public/ba8f09cf06d30d431b514907755c5ca97a771538d4c441642b311911f0ae86f7/download", "KEYLESS")
+
 
 -- Key Tab Items
 AddItem(KeyTab, "OMG HUB", "https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua", "KEY")
