@@ -380,6 +380,7 @@ AddItem(ScriptsTab, "CAT HUB", "https://raw.githubusercontent.com/showscript-hub
 AddItem(ScriptsTab, "NASI RENDANG", "https://raw.githubusercontent.com/JualNasiRendang/loader/refs/heads/main/main.lua")
 AddItem(ScriptsTab, "VOID SHELL", "https://raw.githubusercontent.com/VoidShell-null/VoidShell-Hub/refs/heads/main/Scripts/StealAnEgg.luau")
 AddItem(ScriptsTab, "SOLVEX", "https://raw.githubusercontent.com/Solvexxxx/Scripts/refs/heads/main/SolvexGUI_SAE.lua")
+AddItem(ScriptsTab, "PULSEHUB", "https://raw.githubusercontent.com/PulseZax/Loader/refs/heads/main/.lua")
 
 -- Key Tab Items
 AddItem(KeyTab, "OMG HUB", "https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua", "KEY")
