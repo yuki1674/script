@@ -405,6 +405,8 @@ AddItem(BreakStealTab, "TSUO", "https://raw.githubusercontent.com/Tsuo7/TsuoHub/
 AddItem(AnimeDiceTab, "VALUE HATS", "https://raw.githubusercontent.com/ValueHat-Script/Valuehat-script/refs/heads/main/AnimeDice.lua", "HATS")
 AddItem(AnimeDiceTab, "DAIK1 KEYLESS", "https://raw.githubusercontent.com/DAIK1HUB/ANIME-DICE./refs/heads/main/KEYLESS", "KEYLESS")
 AddItem(AnimeDiceTab, "DOIT HUB", "https://rawscripts.net/raw/UPD-4-Anime-Dice-DOIT-HUB-Keyless-Fast-Roll-Auto-SellLock-Tower-228396", "AIR")
+AddItem(AnimeDiceTab, "NEXUS", "https://rawscripts.net/raw/UPD-5-Anime-Dice-Keyless-or-or-Auto-roll-or-auto-reb-or-and-more!-229947", "KEYLESS")
+
 
 -- Karinderya Tab Items (Nyxen Hub, Xanxn, Ouroboros)
 AddItem(KarinderyaTab, "NYXEN HUB", "https://raw.githubusercontent.com/jsnyxen/nyxen-hub/main/loader.lua", "NYXEN")
