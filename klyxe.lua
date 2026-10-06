@@ -406,6 +406,7 @@ AddItem(AnimeDiceTab, "VALUE HATS", "https://raw.githubusercontent.com/ValueHat-
 AddItem(AnimeDiceTab, "DAIK1 KEYLESS", "https://raw.githubusercontent.com/DAIK1HUB/ANIME-DICE./refs/heads/main/KEYLESS", "KEYLESS")
 AddItem(AnimeDiceTab, "DOIT HUB", "https://rawscripts.net/raw/UPD-4-Anime-Dice-DOIT-HUB-Keyless-Fast-Roll-Auto-SellLock-Tower-228396", "AIR")
 AddItem(AnimeDiceTab, "NEXUS", "https://rawscripts.net/raw/UPD-5-Anime-Dice-Keyless-or-or-Auto-roll-or-auto-reb-or-and-more!-229947", "KEYLESS")
+AddItem(AnimeDiceTab, "SENY", "https://rawscripts.net/raw/UPD-5-Anime-Dice-Serenity-Hub-229371", "KEYLESS")
 
 
 -- Karinderya Tab Items (Nyxen Hub, Xanxn, Ouroboros)
