@@ -1,15 +1,32 @@
 -- KLYXE HUB | Owner: clyecon (Loading Screen, Minimize, Karinderya Tab & Swipeable Lists)
 local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local TweenService = game:GetService("TweenService")
 
--- 1. Loading Screen (Lalabas muna ng mga 5 segundo)
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:FindFirstChild("PlayerGui") or LocalPlayer:WaitForChild("PlayerGui", 5)
+
+-- Parent Container Helper
+local function GetGuiContainer()
+    local success, result = pcall(function()
+        return CoreGui
+    end)
+    if success and result then
+        return CoreGui
+    end
+    return PlayerGui
+end
+
+local TargetParent = GetGuiContainer()
+
+-- 1. Loading Screen
 local LoadGui = Instance.new("ScreenGui")
-LoadGui.Parent = CoreGui or PlayerGui
 LoadGui.Name = "KlyxeLoading"
+LoadGui.ResetOnSpawn = false
+LoadGui.Parent = TargetParent
 
 local LoadFrame = Instance.new("Frame")
+LoadFrame.Name = "LoadFrame"
 LoadFrame.Parent = LoadGui
 LoadFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 LoadFrame.Position = UDim2.new(0.5, -125, 0.5, -80)
@@ -63,24 +80,83 @@ local BarFillCorner = Instance.new("UICorner")
 BarFillCorner.CornerRadius = UDim.new(1, 0)
 BarFillCorner.Parent = BarFill
 
-local tweenService = game:GetService("TweenService")
-tweenService:Create(BarFill, TweenInfo.new(5, Enum.EasingStyle.Linear), {Size = UDim2.new(1, 0, 1, 0)}):Play()
+TweenService:Create(BarFill, TweenInfo.new(5, Enum.EasingStyle.Linear), {Size = UDim2.new(1, 0, 1, 0)}):Play()
 
 task.wait(5)
 LoadGui:Destroy()
 
--- 2. Mismong Main GUI ng Klyxe Hub
+-- 2. Main GUI Setup
 local ScreenGui = Instance.new("ScreenGui")
-local MainFrame = Instance.new("Frame")
-local TitleLabel = Instance.new("TextLabel")
-local UICorner = Instance.new("UICorner")
-local UIStroke = Instance.new("UIStroke")
-local CloseBtn = Instance.new("TextButton")
-local MinimizeBtn = Instance.new("TextButton")
-local isMinimized = false
+ScreenGui.Name = "KlyxeHub"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = TargetParent
 
--- Maliit na Box kapag naka-minimize
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+MainFrame.Position = UDim2.new(0.5, -210, 0.5, -135)
+MainFrame.Size = UDim2.new(0, 420, 0, 270)
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.Parent = MainFrame
+
+local UIStroke = Instance.new("UIStroke")
+UIStroke.Parent = MainFrame
+UIStroke.Color = Color3.fromRGB(220, 20, 60)
+UIStroke.Thickness = 2
+
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Name = "Title"
+TitleLabel.Parent = MainFrame
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Position = UDim2.new(0, 12, 0, 8)
+TitleLabel.Size = UDim2.new(1, -80, 0, 25)
+TitleLabel.Font = Enum.Font.SourceSansBold
+TitleLabel.Text = "KLYXE HUB | Owner: clyecon"
+TitleLabel.TextColor3 = Color3.fromRGB(220, 20, 60)
+TitleLabel.TextSize = 12
+TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Name = "CloseButton"
+CloseBtn.Parent = MainFrame
+CloseBtn.Position = UDim2.new(1, -28, 0, 8)
+CloseBtn.Size = UDim2.new(0, 20, 0, 20)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 0, 0)
+CloseBtn.Font = Enum.Font.SourceSansBold
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextSize = 12
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 4)
+CloseCorner.Parent = CloseBtn
+
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+local MinimizeBtn = Instance.new("TextButton")
+MinimizeBtn.Name = "MinimizeButton"
+MinimizeBtn.Parent = MainFrame
+MinimizeBtn.Position = UDim2.new(1, -52, 0, 8)
+MinimizeBtn.Size = UDim2.new(0, 20, 0, 20)
+MinimizeBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+MinimizeBtn.Font = Enum.Font.SourceSansBold
+MinimizeBtn.Text = "-"
+MinimizeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizeBtn.TextSize = 14
+
+local MinCorner = Instance.new("UICorner")
+MinCorner.CornerRadius = UDim.new(1, 0)
+MinCorner.Parent = MinimizeBtn
+
 local SmallBox = Instance.new("TextButton")
+SmallBox.Name = "SmallBox"
 SmallBox.Parent = ScreenGui
 SmallBox.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 SmallBox.Position = UDim2.new(0.5, -30, 0.1, 0)
@@ -102,80 +178,7 @@ SmallStroke.Parent = SmallBox
 SmallStroke.Color = Color3.fromRGB(220, 20, 60)
 SmallStroke.Thickness = 2
 
--- Sidebar Frame (Kaliwa) - Naka-ScrollingFrame na para ma-swipe kung madami ang tabs
 local SidebarScroll = Instance.new("ScrollingFrame")
-local SidebarLayout = Instance.new("UIListLayout")
-
--- Content Container Frame (Kanan)
-local ContentContainer = Instance.new("Frame")
-
--- Parent Setup
-ScreenGui.Parent = CoreGui or PlayerGui
-ScreenGui.Name = "KlyxeHub"
-
--- Main Window
-MainFrame.Name = "MainFrame"
-MainFrame.Parent = ScreenGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-MainFrame.Position = UDim2.new(0.5, -210, 0.5, -135)
-MainFrame.Size = UDim2.new(0, 420, 0, 270)
-MainFrame.Active = true
-MainFrame.Draggable = true
-
-UICorner.CornerRadius = UDim.new(0, 10)
-UICorner.Parent = MainFrame
-
-UIStroke.Parent = MainFrame
-UIStroke.Color = Color3.fromRGB(220, 20, 60)
-UIStroke.Thickness = 2
-
--- Title Label
-TitleLabel.Name = "Title"
-TitleLabel.Parent = MainFrame
-TitleLabel.BackgroundTransparency = 1
-TitleLabel.Position = UDim2.new(0, 12, 0, 8)
-TitleLabel.Size = UDim2.new(1, -80, 0, 25)
-TitleLabel.Font = Enum.Font.SourceSansBold
-TitleLabel.Text = "KLYXE HUB | Owner: clyecon"
-TitleLabel.TextColor3 = Color3.fromRGB(220, 20, 60)
-TitleLabel.TextSize = 12
-TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
-
--- Close ("X") Button
-CloseBtn.Name = "CloseButton"
-CloseBtn.Parent = MainFrame
-CloseBtn.Position = UDim2.new(1, -28, 0, 8)
-CloseBtn.Size = UDim2.new(0, 20, 0, 20)
-CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 0, 0)
-CloseBtn.Font = Enum.Font.SourceSansBold
-CloseBtn.Text = "X"
-CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseBtn.TextSize = 12
-
-local CloseCorner = Instance.new("UICorner")
-CloseCorner.CornerRadius = UDim.new(0, 4)
-CloseCorner.Parent = CloseBtn
-
-CloseBtn.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-end)
-
--- Minimize ("-") Button
-MinimizeBtn.Name = "MinimizeButton"
-MinimizeBtn.Parent = MainFrame
-MinimizeBtn.Position = UDim2.new(1, -52, 0, 8)
-MinimizeBtn.Size = UDim2.new(0, 20, 0, 20)
-MinimizeBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-MinimizeBtn.Font = Enum.Font.SourceSansBold
-MinimizeBtn.Text = "-"
-MinimizeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-MinimizeBtn.TextSize = 14
-
-local MinCorner = Instance.new("UICorner")
-MinCorner.CornerRadius = UDim.new(1, 0)
-MinCorner.Parent = MinimizeBtn
-
--- Sidebar Setup (Tabs sa Kaliwa)
 SidebarScroll.Parent = MainFrame
 SidebarScroll.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 SidebarScroll.Position = UDim2.new(0, 10, 0, 38)
@@ -188,6 +191,7 @@ local SidebarCorner = Instance.new("UICorner")
 SidebarCorner.CornerRadius = UDim.new(0, 6)
 SidebarCorner.Parent = SidebarScroll
 
+local SidebarLayout = Instance.new("UIListLayout")
 SidebarLayout.Parent = SidebarScroll
 SidebarLayout.SortOrder = Enum.SortOrder.LayoutOrder
 SidebarLayout.Padding = UDim.new(0, 5)
@@ -196,20 +200,19 @@ SidebarLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
     SidebarScroll.CanvasSize = UDim2.new(0, 0, 0, SidebarLayout.AbsoluteContentSize.Y + 10)
 end)
 
--- Content Container (Kanan)
+local ContentContainer = Instance.new("Frame")
 ContentContainer.Parent = MainFrame
 ContentContainer.BackgroundTransparency = 1
 ContentContainer.Position = UDim2.new(0, 125, 0, 38)
 ContentContainer.Size = UDim2.new(1, -135, 1, -75)
 
--- Function para sa paggawa ng Tabs
 local Pages = {}
 local function CreateTab(tabName)
     local TabBtn = Instance.new("TextButton")
     local TabCorner = Instance.new("UICorner")
     
     TabBtn.Parent = SidebarScroll
-    TabBtn.Size = UDim2.new(1, 0, 0, 30)
+    TabBtn.Size = UDim2.new(1, -6, 0, 30)
     TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
     TabBtn.Font = Enum.Font.SourceSansBold
     TabBtn.Text = tabName
@@ -252,20 +255,20 @@ local function CreateTab(tabName)
     return ScrollFrame
 end
 
--- Tabs (Kasama na ang Karinderya tab)
-local ScriptsTab = CreateTab("Scripts")
+-- Tabs Initialization
+local KeylessTab = CreateTab("Keyless")
+local KeyTab = CreateTab("Key")
 local RideAPetTab = CreateTab("Ride a Pet")
 local BreakStealTab = CreateTab("Break & Steal")
 local AnimeDiceTab = CreateTab("Anime Dice")
 local KarinderyaTab = CreateTab("Karinderya")
-local KeyTab = CreateTab("Key")
 local FinderTab = CreateTab("PS Finder")
 local ShaderTab = CreateTab("Shader")
-local AnimTab = CreateTab("Animations")
+local AvatarTab = CreateTab("Avatar Changer")
 local MusicTab = CreateTab("Music")
 local SettingsTab = CreateTab("Settings")
 
--- Discord Copy Button sa Baba ng Main Frame
+-- Discord Link
 local DiscButton = Instance.new("TextButton")
 local DiscCorner = Instance.new("UICorner")
 
@@ -289,7 +292,8 @@ DiscButton.MouseButton1Click:Connect(function()
     DiscButton.Text = "COPY DISCORD LINK"
 end)
 
--- Minimize & Unminimize Logic
+-- Minimize Logic
+local isMinimized = false
 local function ToggleMinimize()
     isMinimized = not isMinimized
     MainFrame.Visible = not isMinimized
@@ -299,7 +303,7 @@ end
 MinimizeBtn.MouseButton1Click:Connect(ToggleMinimize)
 SmallBox.MouseButton1Click:Connect(ToggleMinimize)
 
--- Function para sa paggawa ng Items sa loob ng tab
+-- Script Container Item Creation
 local function AddItem(targetTab, scriptName, scriptUrl, badgeText)
     local ItemFrame = Instance.new("Frame")
     local ItemCorner = Instance.new("UICorner")
@@ -310,7 +314,7 @@ local function AddItem(targetTab, scriptName, scriptUrl, badgeText)
     local ExecButton = Instance.new("TextButton")
     local ExecCorner = Instance.new("UICorner")
 
-    ItemFrame.Size = UDim2.new(1, -5, 0, 38)
+    ItemFrame.Size = UDim2.new(1, -8, 0, 38)
     ItemFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     ItemFrame.Parent = targetTab
 
@@ -361,58 +365,36 @@ local function AddItem(targetTab, scriptName, scriptUrl, badgeText)
     end)
 end
 
--- Scripts Tab Items
-AddItem(ScriptsTab, "LKZ", "https://api.luarmor.net/files/v4/loaders/65bf3459d87ba3ac46350e154b640929.lua")
-AddItem(ScriptsTab, "STORM", "https://flowauth.net/v1/loaders/6824c37a4078d7d311677732e231edaa.lua")
-AddItem(ScriptsTab, "LEVON", "https://pastefy.app/nasHhfko/raw")
-AddItem(ScriptsTab, "SENA", "https://raw.githubusercontent.com/senarblx/sena/refs/heads/main/senav3go")
-AddItem(ScriptsTab, "FOX", "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua")
-AddItem(ScriptsTab, "BLXY", "https://flowauth.net/v1/loaders/69d3463240384f3a73fbe32c178093a2.lua")
-AddItem(ScriptsTab, "LENNON V4", "https://api.luarmor.net/files/v4/loaders/4595fe31a5f7a8b4f4dd7071f3119ef7.lua")
-AddItem(ScriptsTab, "NIGHT HUB", "https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/StealEggOnly.luau")
-AddItem(ScriptsTab, "SAEGRR", "https://raw.githubusercontent.com/swaggayoung581-sudo/SAE-COMMUNITYYYYY/refs/heads/main/SAEGRR_HUB_BLACK_RED_TWO_MENUS_AUTO_STEAL.lua.txt")
-AddItem(ScriptsTab, "CHILI", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua")
-AddItem(ScriptsTab, "DECODE", "https://raw.githubusercontent.com/ItzYumi/Decode/refs/heads/main/DE%3ACODE.lua")
-AddItem(ScriptsTab, "TSUO", "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg")
-AddItem(ScriptsTab, "LIMBO", "https://limbohub.my.id/loader.lua")
-AddItem(ScriptsTab, "MIRANDAV4", "https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/mirandaafk.lua")
-AddItem(ScriptsTab, "KEYLESS", "https://raw.githubusercontent.com/Developer-20261/FreeForALL/refs/heads/main/Keyless")
-AddItem(ScriptsTab, "HORZIN", "https://api.jnkie.com/api/v1/luascripts/public/3db06e0eaa1e4e8bf5e9d3192fa71e0bad2d1d1af5b11c0a58e6b708ad4487f4/download")
-AddItem(ScriptsTab, "NEXORA", "https://raw.githubusercontent.com/Dayvinksthik/Script/refs/heads/main/Games/JoshBNS-Crack.lua")
-AddItem(ScriptsTab, "AEV", "https://vampauth.com/api/projects/2826ec6b-24e6-4392-b3e2-48512923e68c/scripts/aevix")
-AddItem(ScriptsTab, "LEON 1", "https://raw.githubusercontent.com/sabscrip-arch/srver/refs/heads/main/Stealanegg")
-AddItem(ScriptsTab, "JOHNBNS", "https://raw.githubusercontent.com/Developer-20261/FreeForALL/refs/heads/main/Keyless")
-AddItem(ScriptsTab, "VANTA B", "https://raw.githubusercontent.com/tranduykhanh08428-web/VantablackHub/refs/heads/main/Stealanegg.lua.txt")
-AddItem(ScriptsTab, "YODOKU", "https://raw.githubusercontent.com/betdoyvaka/stealanegg/main/Loader.lua")
-AddItem(ScriptsTab, "LEON 2", "https://raw.githubusercontent.com/n01771542-cmd/faluahub/main/main.lua")
-AddItem(ScriptsTab, "VIEL", "https://pastefy.app/jemUHE0u/raw")
-AddItem(ScriptsTab, "CAT HUB", "https://raw.githubusercontent.com/showscript-hub/Script/refs/heads/main/Cat-hub")
-AddItem(ScriptsTab, "NASI RENDANG", "https://raw.githubusercontent.com/JualNasiRendang/loader/refs/heads/main/main.lua")
-AddItem(ScriptsTab, "VOID SHELL", "https://raw.githubusercontent.com/VoidShell-null/VoidShell-Hub/refs/heads/main/Scripts/StealAnEgg.luau")
-AddItem(ScriptsTab, "SOLVEX", "https://raw.githubusercontent.com/Solvexxxx/Scripts/refs/heads/main/SolvexGUI_SAE.lua")
-AddItem(ScriptsTab, "PULSEHUB", "https://raw.githubusercontent.com/PulseZax/Loader/refs/heads/main/.lua")
-
--- Ride a Pet Tab Items
-AddItem(RideAPetTab, "CHILI", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua", "PET")
-AddItem(RideAPetTab, "OUROBOROS", "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua", "KEYLESS")
-
--- Break & Steal Tab Items
-AddItem(BreakStealTab, "FOX", "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua", "BREAK/STEAL")
-AddItem(BreakStealTab, "NIGHT HUB", "https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/StealEggOnly.luau", "BREAK/STEAL")
-AddItem(BreakStealTab, "TSUO", "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg", "BREAK/STEAL")
-
--- Anime Dice Tab Items
-AddItem(AnimeDiceTab, "VALUE HATS", "https://raw.githubusercontent.com/ValueHat-Script/Valuehat-script/refs/heads/main/AnimeDice.lua", "HATS")
-AddItem(AnimeDiceTab, "DAIK1 KEYLESS", "https://raw.githubusercontent.com/DAIK1HUB/ANIME-DICE./refs/heads/main/KEYLESS", "KEYLESS")
-AddItem(AnimeDiceTab, "DOIT HUB", "https://rawscripts.net/raw/UPD-4-Anime-Dice-DOIT-HUB-Keyless-Fast-Roll-Auto-SellLock-Tower-228396", "AIR")
-AddItem(AnimeDiceTab, "NEXUS", "https://rawscripts.net/raw/UPD-5-Anime-Dice-Keyless-or-or-Auto-roll-or-auto-reb-or-and-more!-229947", "KEYLESS")
-AddItem(AnimeDiceTab, "SENY", "https://rawscripts.net/raw/UPD-5-Anime-Dice-INSANE-AUTO-FARM!-FAST-ROLL-+-AUTO-SELL-+-INSTANT-TOWER-229271", "KEYLESS")
-
-
--- Karinderya Tab Items (Nyxen Hub, Xanxn, Ouroboros)
-AddItem(KarinderyaTab, "NYXEN HUB", "https://raw.githubusercontent.com/jsnyxen/nyxen-hub/main/loader.lua", "NYXEN")
-AddItem(KarinderyaTab, "XANXN", "https://raw.githubusercontent.com/Zanxanax/scripts/main/Loader.lua", "XANXN")
-AddItem(KarinderyaTab, "OUROBOROS", "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua", "OURO")
+-- Keyless Tab Items
+AddItem(KeylessTab, "LKZ", "https://api.luarmor.net/files/v4/loaders/65bf3459d87ba3ac46350e154b640929.lua")
+AddItem(KeylessTab, "STORM", "https://flowauth.net/v1/loaders/6824c37a4078d7d311677732e231edaa.lua")
+AddItem(KeylessTab, "LEVON", "https://pastefy.app/nasHhfko/raw")
+AddItem(KeylessTab, "SENA", "https://raw.githubusercontent.com/senarblx/sena/refs/heads/main/senav3go")
+AddItem(KeylessTab, "FOX", "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua")
+AddItem(KeylessTab, "BLXY", "https://flowauth.net/v1/loaders/69d3463240384f3a73fbe32c178093a2.lua")
+AddItem(KeylessTab, "LENNON V4", "https://api.luarmor.net/files/v4/loaders/4595fe31a5f7a8b4f4dd7071f3119ef7.lua")
+AddItem(KeylessTab, "NIGHT HUB", "https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/StealEggOnly.luau")
+AddItem(KeylessTab, "SAEGRR", "https://raw.githubusercontent.com/swaggayoung581-sudo/SAE-COMMUNITYYYYY/refs/heads/main/SAEGRR_HUB_BLACK_RED_TWO_MENUS_AUTO_STEAL.lua.txt")
+AddItem(KeylessTab, "CHILI", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua")
+AddItem(KeylessTab, "DECODE", "https://raw.githubusercontent.com/ItzYumi/Decode/refs/heads/main/DE%3ACODE.lua")
+AddItem(KeylessTab, "TSUO", "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg")
+AddItem(KeylessTab, "LIMBO", "https://limbohub.my.id/loader.lua")
+AddItem(KeylessTab, "MIRANDAV4", "https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/mirandaafk.lua")
+AddItem(KeylessTab, "KEYLESS", "https://raw.githubusercontent.com/Developer-20261/FreeForALL/refs/heads/main/Keyless")
+AddItem(KeylessTab, "HORZIN", "https://api.jnkie.com/api/v1/luascripts/public/3db06e0eaa1e4e8bf5e9d3192fa71e0bad2d1d1af5b11c0a58e6b708ad4487f4/download")
+AddItem(KeylessTab, "NEXORA", "https://raw.githubusercontent.com/Dayvinksthik/Script/refs/heads/main/Games/JoshBNS-Crack.lua")
+AddItem(KeylessTab, "AEV", "https://vampauth.com/api/projects/2826ec6b-24e6-4392-b3e2-48512923e68c/scripts/aevix")
+AddItem(KeylessTab, "LEON 1", "https://raw.githubusercontent.com/sabscrip-arch/srver/refs/heads/main/Stealanegg")
+AddItem(KeylessTab, "JOHNBNS", "https://raw.githubusercontent.com/Developer-20261/FreeForALL/refs/heads/main/Keyless")
+AddItem(KeylessTab, "VANTA B", "https://raw.githubusercontent.com/tranduykhanh08428-web/VantablackHub/refs/heads/main/Stealanegg.lua.txt")
+AddItem(KeylessTab, "YODOKU", "https://raw.githubusercontent.com/betdoyvaka/stealanegg/main/Loader.lua")
+AddItem(KeylessTab, "LEON 2", "https://raw.githubusercontent.com/n01771542-cmd/faluahub/main/main.lua")
+AddItem(KeylessTab, "VIEL", "https://pastefy.app/jemUHE0u/raw")
+AddItem(KeylessTab, "CAT HUB", "https://raw.githubusercontent.com/showscript-hub/Script/refs/heads/main/Cat-hub")
+AddItem(KeylessTab, "NASI RENDANG", "https://raw.githubusercontent.com/JualNasiRendang/loader/refs/heads/main/main.lua")
+AddItem(KeylessTab, "VOID SHELL", "https://raw.githubusercontent.com/VoidShell-null/VoidShell-Hub/refs/heads/main/Scripts/StealAnEgg.luau")
+AddItem(KeylessTab, "SOLVEX", "https://raw.githubusercontent.com/Solvexxxx/Scripts/refs/heads/main/SolvexGUI_SAE.lua")
+AddItem(KeylessTab, "PULSEHUB", "https://raw.githubusercontent.com/PulseZax/Loader/refs/heads/main/.lua")
 
 -- Key Tab Items
 AddItem(KeyTab, "OMG HUB", "https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua", "KEY")
@@ -434,6 +416,25 @@ AddItem(KeyTab, "BF", "https://raw.githubusercontent.com/hanniii1/Loader/refs/he
 AddItem(KeyTab, "ZN", "https://zeroinhub.com/api/script", "KEY")
 AddItem(KeyTab, "SPEED HUB", "https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", "KEY")
 
+-- Ride a Pet Tab Items
+AddItem(RideAPetTab, "CHILI", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua", "PET")
+AddItem(RideAPetTab, "OUROBOROS", "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua", "KEYLESS")
+
+-- Break & Steal Tab Items
+AddItem(BreakStealTab, "KLYXE HUB", "https://raw.githubusercontent.com/yuki1674/break-and-steal-an-egg-/main/klyxe.lua", "BREAK/STEAL")
+
+-- Anime Dice Tab Items
+AddItem(AnimeDiceTab, "VALUE HATS", "https://raw.githubusercontent.com/ValueHat-Script/Valuehat-script/refs/heads/main/AnimeDice.lua", "HATS")
+AddItem(AnimeDiceTab, "DAIK1 KEYLESS", "https://raw.githubusercontent.com/DAIK1HUB/ANIME-DICE./refs/heads/main/KEYLESS", "KEYLESS")
+AddItem(AnimeDiceTab, "DOIT HUB", "https://rawscripts.net/raw/UPD-4-Anime-Dice-DOIT-HUB-Keyless-Fast-Roll-Auto-SellLock-Tower-228396", "KEYLESS")
+AddItem(AnimeDiceTab, "NEXUS", "https://rawscripts.net/raw/UPD-5-Anime-Dice-Keyless-or-or-Auto-roll-or-auto-reb-or-and-more!-229947", "KEYLESS")
+AddItem(AnimeDiceTab, "SENY", "https://rawscripts.net/raw/UPD-5-Anime-Dice-INSANE-AUTO-FARM!-FAST-ROLL-+-AUTO-SELL-+-INSTANT-TOWER-229271", "KEYLESS")
+
+-- Karinderya Tab Items
+AddItem(KarinderyaTab, "NYXEN HUB", "https://raw.githubusercontent.com/jsnyxen/nyxen-hub/main/loader.lua", "NYXEN")
+AddItem(KarinderyaTab, "XANXN", "https://raw.githubusercontent.com/Zanxanax/scripts/main/Loader.lua", "XANXN")
+AddItem(KarinderyaTab, "OUROBOROS", "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua", "OURO")
+
 -- PS Finder Tab Items
 AddItem(FinderTab, "FINDER 1", "https://luasnapper.xyz/files/loaders/90388b27f7484a8fa16e70dd9030bf8a.lua", "FINDER")
 AddItem(FinderTab, "FINDER 2", "https://raw.githubusercontent.com/robloxscripts2026/sae-ps/refs/heads/main/lua", "FINDER")
@@ -441,11 +442,12 @@ AddItem(FinderTab, "FINDER 2", "https://raw.githubusercontent.com/robloxscripts2
 -- Shader Tab Items
 AddItem(ShaderTab, "PSHADE ULTIMATE", "https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua", "GRAPHICS")
 
--- Animations Tab Items
-AddItem(AnimTab, "ANIMATION 1", "https://pastebin.com/raw/cr20JxP9", "ANIM")
-AddItem(AnimTab, "ANIMATION 2", "https://raw.githubusercontent.com/swaggayoung581-sudo/special-computing-machine/refs/heads/main/SAE_HUB_MENU_SKY_ACCESSORY_ANIM_FIXED_FOV_ANIM_COMPACT_SAVE_CONFIG.lua%20(1).txt", "ANIM")
+-- Avatar Changer Tab Items
+AddItem(AvatarTab, "AVATAR CHANGER 1", "https://rawscripts.net/raw/Universal-Script-Avatar-Changer-91619", "AVATAR")
+AddItem(AvatarTab, "CLIENT AVATAR", "https://rawscripts.net/raw/Universal-Script-client-avatar-changer-92130", "AVATAR")
+AddItem(AvatarTab, "OPEN SOURCE AVATAR", "https://rawscripts.net/raw/Universal-Script-UNIVERSAL-AVATAR-CHANGER-OPEN-SOURCE-88368", "AVATAR")
 
--- Music Tab Items (YouTube Music Player V8.5)
+-- Music Tab Items
 AddItem(MusicTab, "YT MUSIC V8.5", "https://raw.githubusercontent.com/iimate/ytmusic/refs/heads/main/loader.lua", "MUSIC")
 
 -- Settings Tab Items
@@ -457,7 +459,7 @@ local function AddSettingsItem(targetTab, labelText, buttonText, callback)
     local ExecButton = Instance.new("TextButton")
     local ExecCorner = Instance.new("UICorner")
 
-    ItemFrame.Size = UDim2.new(1, -5, 0, 38)
+    ItemFrame.Size = UDim2.new(1, -8, 0, 38)
     ItemFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     ItemFrame.Parent = targetTab
 
